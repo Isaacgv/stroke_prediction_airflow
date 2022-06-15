@@ -1,6 +1,0 @@
-id,firstname,lastname,gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status,predicition
-57523,Tyler,Chambers,Female,26,0,0,Yes,Private,Urban,116.38,21.9,formerly smoked,0
-46903,Sophia,Holloway,Female,62,0,0,Yes,Private,Urban,56.74,28.9,never smoked,0
-25102,Violet,Powers,Female,51,0,0,Yes,Govt_job,Urban,95.16,42.7,formerly smoked,0
-13529,Luis,Stevens,Female,36,0,0,Yes,Govt_job,Rural,129.43,29.7,never smoked,0
-18754,Logan,Chapman,Male,19,0,0,No,Self-employed,Rural,82.07,29.0,never smoked,0

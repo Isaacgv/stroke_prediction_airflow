@@ -1,6 +1,0 @@
-id,firstname,lastname,gender,age,hypertension,heart_disease,ever_married,work_type,Residence_type,avg_glucose_level,bmi,smoking_status
-28364,Erik,Bowers,Male,61,0,0,Yes,Private,Urban,84.12,25.1,formerly smoked
-66184,Elizabeth,Byrd,Male,40,0,0,Yes,Govt_job,Rural,100.26,26.0,Unknown
-25627,Lewis,Simon,Male,81,1,0,Yes,Self-employed,Urban,231.19,31.6,formerly smoked
-67921,Elnora,Chandler,Female,5,0,0,No,children,Urban,55.35,22.7,Unknown
-71929,Bill,Mason,Male,2,0,0,No,children,Rural,56.77,20.9,Unknown

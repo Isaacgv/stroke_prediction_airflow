@@ -44,7 +44,7 @@ x-airflow-common:
   # In order to add custom dependencies or upgrade provider packages you can use your extended image.
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
-  image: ${AIRFLOW_IMAGE_NAME:-stroke-airflow:2.3.0}
+  image: ${AIRFLOW_IMAGE_NAME:-stroke-airflow_v2:latest}
   # build: .
   environment:
     &airflow-common-env
@@ -60,14 +60,20 @@ x-airflow-common:
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__WEBSERVER__WORKERS: '2'
+  
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     - ./input_data:/opt/airflow/input_data
     - ./output_data:/opt/airflow/output_data
+    - ./output_quality_data:/opt/airflow/output_quality_data
     - ./models:/opt/models
     - ./stroke_prediction:/opt/stroke_prediction
+    - ./great_expectations:/opt/great_expectations
+    - ./process_functions:/opt/process_functions
+    
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -140,7 +146,7 @@ services:
         - "CMD-SHELL"
         - 'celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
       interval: 10s
-      timeout: 10s
+      timeout: 20s
       retries: 5
     environment:
       <<: *airflow-common-env

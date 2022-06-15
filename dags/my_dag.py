@@ -3,21 +3,25 @@ from datetime import datetime
 from datetime import timedelta
 
 import pandas as pd
+import os
+
+
 from airflow.decorators import dag, task
 from pendulum import today
 
 import sys
 sys.path.insert(0,'/opt/stroke_prediction')
 
+
 from inference import make_prediction
 
 
 @dag(
-    dag_id="ingest_data",
-    description="Ingest data from a file to another DAG",
-    tags=["stroke detection files"],
+    dag_id="predict_data",
+    description="Predict data from a file to another DAG",
+    tags=["detection files"],
     default_args={'owner': 'airflow'},
-    schedule_interval=timedelta(minutes=1),
+    schedule_interval=timedelta(minutes=2),
     start_date=today().add(hours=-1)
 )
 def ingest_data():
@@ -34,7 +38,6 @@ def ingest_data():
     data_to_ingest = get_data_ingest_from_local_file_task()
     save_data(data_to_ingest)
 
-
 ingest_data_dag = ingest_data()
 
 
@@ -47,8 +50,7 @@ def _get_data_ingest_from_local_file():
 
 def _save_data(data_ingest_js):
     data_ingest_df = pd.read_json(data_ingest_js, orient='index')
-    import os
-
+    
     print("Path at terminal when executing this file")
     print(os.getcwd() + "\n")
     data_ingest_df["predicition"] = make_prediction(data_ingest_df)
