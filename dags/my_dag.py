@@ -2,7 +2,6 @@
 from datetime import datetime
 from datetime import timedelta
 
-import pandas as pd
 import os
 
 
@@ -42,6 +41,7 @@ ingest_data_dag = ingest_data()
 
 
 def _get_data_ingest_from_local_file():
+    import pandas as pd
     input_data_df = pd.read_csv("/opt/airflow/input_data/stroke_data.csv")
     data_ingest_df = input_data_df.sample(n=5)
     
@@ -49,10 +49,11 @@ def _get_data_ingest_from_local_file():
 
 
 def _save_data(data_ingest_js):
+    import pandas as pd
     data_ingest_df = pd.read_json(data_ingest_js, orient='index')
     
-    print("Path at terminal when executing this file")
-    print(os.getcwd() + "\n")
+    #print("Path at terminal when executing this file")
+    #print(os.getcwd() + "\n")
     data_ingest_df["predicition"] = make_prediction(data_ingest_df)
     filepath = f"/opt/airflow/output_data/{datetime.now()}.csv"
     data_ingest_df.to_csv(filepath, index=False)
