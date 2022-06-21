@@ -18,8 +18,7 @@ Project is created with:
 ## Initial configuration 
 ### Build image - init
     sudo docker build . --tag stroke-airflow_v2 --no-cache
-### Airflow Configuration - init
-    mkdir -p ./dags ./logs ./plugins ./input_data ./output_data
+
 ### Permissions to folders - init
     sudo echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 
