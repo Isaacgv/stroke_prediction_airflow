@@ -6,9 +6,10 @@ import requests
 
 BACKEND_SERVER = "http://35.238.16.200:8005/"
 
+
 def get_prediction_document(filename: str, data: pd.DataFrame) -> pd.DataFrame:
     """_summary_
-     Takes File Input from User Interface returns a Prediction Dataframe
+    Takes File Input from User Interface returns a Prediction Dataframe
     Args:
         data (pd.DataFrame): _description_
     """
@@ -32,7 +33,6 @@ def get_prediction_document(filename: str, data: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame([]), True
 
 
-
 def data_frame_fix_column_with_Nan_float(data):
     """_summary_
     Fix Nan_float issues in dataframe , Pydantic model doesn't like
@@ -49,7 +49,3 @@ def data_frame_fix_column_with_Nan_float(data):
     data.loc[:, float_cols] = data.loc[:, float_cols].fillna(0.0)
     data.loc[:, str_cols] = data.loc[:, str_cols].fillna('')
     return data
-
-
-
-

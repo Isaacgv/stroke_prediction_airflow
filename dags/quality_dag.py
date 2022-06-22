@@ -8,6 +8,7 @@ from pendulum import today
 import sys
 sys.path.insert(0,'/opt/process_functions')
 
+
 @dag(
     dag_id="ingest_data",
     description="Ingest data from a file to another DAG",
@@ -17,6 +18,8 @@ sys.path.insert(0,'/opt/process_functions')
     start_date=today().add(hours=-1),
     dagrun_timeout = timedelta(minutes=20)
 )
+
+
 def ingest_data():
 
     @task
