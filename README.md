@@ -1,4 +1,4 @@
-
+This project is part of https://github.com/Isaacgv/stroke_heart_prediction
 
 
 # Table of contents
