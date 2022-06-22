@@ -2,18 +2,15 @@
 from datetime import datetime
 from datetime import timedelta
 
-import os
-
 
 from airflow.decorators import dag, task
 from pendulum import today
 
 import sys
-sys.path.insert(0,'/opt/stroke_prediction')
 
+sys.path.insert(0,'/opt/process_functions')
 
-from inference import make_prediction
-
+from connect_api import get_prediction_document
 
 @dag(
     dag_id="predict_data",
@@ -23,6 +20,7 @@ from inference import make_prediction
     schedule_interval=timedelta(minutes=2),
     start_date=today().add(hours=-1)
 )
+
 def ingest_data():
 
     @task
@@ -51,9 +49,8 @@ def _get_data_ingest_from_local_file():
 def _save_data(data_ingest_js):
     import pandas as pd
     data_ingest_df = pd.read_json(data_ingest_js, orient='index')
-    
-    #print("Path at terminal when executing this file")
-    #print(os.getcwd() + "\n")
-    data_ingest_df["predicition"] = make_prediction(data_ingest_df)
+
     filepath = f"/opt/airflow/output_data/{datetime.now()}.csv"
+
+    data_ingest_df = get_prediction_document(filepath, data_ingest_df)
     data_ingest_df.to_csv(filepath, index=False)
